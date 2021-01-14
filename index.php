@@ -54,7 +54,7 @@
             <div class="row">
                 <div class="col-md-12">
 <?php
-$seed = (empty($_GET['seed']))?((empty($_POST['seed']))?rand(1000000, 9999999):$_POST['seed']):$_GET['seed'];
+$seed = (empty($_GET['seed']))?((empty($_POST['seed']))?rand(1000000, 9999999):$_POST['seed']):(is_numeric($_GET['seed'])?$_GET['seed']: intval((hexdec(substr(md5($_GET['seed']),0,8)))/1000));
 srand($seed);
 $q1_group_count = (empty($_GET['q1count']))?4:$_GET['q1count'];
 $q2_group_count = (empty($_GET['q2count']))?2:$_GET['q2count'];
@@ -215,11 +215,11 @@ if(empty($_POST['submit1']))
             }else{
                 $select_item_array = explode('>',"1>2>3>4");
             }
-            $input_array=array(date("Y/m/d H:i:s ").$seed,'A'.$i,
-                $q1_group_array[$i-1][0][$select_item_array[0]-1],$q1_group_array[$i-1][1][$select_item_array[0]-1],
-                $q1_group_array[$i-1][0][$select_item_array[1]-1],$q1_group_array[$i-1][1][$select_item_array[1]-1],
-                $q1_group_array[$i-1][0][$select_item_array[2]-1],$q1_group_array[$i-1][1][$select_item_array[2]-1],
-                $q1_group_array[$i-1][0][$select_item_array[3]-1],$q1_group_array[$i-1][1][$select_item_array[3]-1]);
+            $input_array=array(date("Y/m/d H:i:s ").$_GET['seed'].' '.$seed,'A'.$i,
+                $q1_group_array[$i-1][0][$select_item_array[0]-1],$q1_group_array[$i-1][1][0],
+                $q1_group_array[$i-1][0][$select_item_array[1]-1],$q1_group_array[$i-1][1][0],
+                $q1_group_array[$i-1][0][$select_item_array[2]-1],$q1_group_array[$i-1][1][0],
+                $q1_group_array[$i-1][0][$select_item_array[3]-1],$q1_group_array[$i-1][1][0]);
             fputcsv($fp,$input_array);
         }
         for ($i = 1; $i <= $q2_group_count; $i++) {
@@ -229,7 +229,7 @@ if(empty($_POST['submit1']))
             }else{
                 $select_item_array = explode('>',"1>2>3>4");
             }
-            $input_array=array(date("Y/m/d H:i:s ").$seed,'B'.$i,
+            $input_array=array(date("Y/m/d H:i:s ").$_GET['seed'].' '.$seed,'B'.$i,
                 $q2_group_array[$i-1][0][$select_item_array[0]-1],$q2_group_array[$i-1][1][$select_item_array[0]-1],
                 $q2_group_array[$i-1][0][$select_item_array[1]-1],$q2_group_array[$i-1][1][$select_item_array[1]-1],
                 $q2_group_array[$i-1][0][$select_item_array[2]-1],$q2_group_array[$i-1][1][$select_item_array[2]-1],
@@ -246,9 +246,9 @@ if(!file_exists("data/".$seed.".csv")){
                 <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th style="width: 26%;">Time And Seed</th>
+                                                <th style="width: 28%;">Time And Seed</th>
                                                 <th style="width: 7%;">Group</th>
-                                                <th style="width: 67%;">Your Answer</th>
+                                                <th style="width: 65%;">Your Answer</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -395,25 +395,25 @@ for ($i = 1; $i <= $q2_group_count; $i++) { ?>
 					{
 						name:'Music piece 1',
 						artist:'Hidden',
-						url:'pieces/<?php print $q1_group_array[$i-1][0][0];?>/<?php print $q1_group_array[$i-1][1][0];?>.mp3',
+						url:'pieces/<?php print $q1_group_array[$i-1][0][0];?>/<?php print $q1_group_array[$i-1][1][0];?>c60.mp3',
 						cover:'images/ms0.png'
 					},
 					{
 						name:'Music piece 2',
 						artist:'Hidden',
-						url:'pieces/<?php print $q1_group_array[$i-1][0][1];?>/<?php print $q1_group_array[$i-1][1][1];?>.mp3',
+						url:'pieces/<?php print $q1_group_array[$i-1][0][1];?>/<?php print $q1_group_array[$i-1][1][0];?>c60.mp3',
 						cover:'images/ms0.png'
                     },
 					{
 						name:'Music piece 3',
 						artist:'Hidden',
-						url:'pieces/<?php print $q1_group_array[$i-1][0][2];?>/<?php print $q1_group_array[$i-1][1][2];?>.mp3',
+						url:'pieces/<?php print $q1_group_array[$i-1][0][2];?>/<?php print $q1_group_array[$i-1][1][0];?>c60.mp3',
 						cover:'images/ms0.png'
 					},
 					{
 						name:'Music piece 4',
 						artist:'Hidden',
-						url:'pieces/<?php print $q1_group_array[$i-1][0][3];?>/<?php print $q1_group_array[$i-1][1][3];?>.mp3',
+						url:'pieces/<?php print $q1_group_array[$i-1][0][3];?>/<?php print $q1_group_array[$i-1][1][0];?>c60.mp3',
 						cover:'images/ms0.png'
 					},
 				]
